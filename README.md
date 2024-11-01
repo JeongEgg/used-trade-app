@@ -30,4 +30,4 @@
 
 ## 🚀 ERD 설계
 
-![iScreen Shoter - 20241102003747384.jpg](../../iScreen%20Shoter%20-%2020241102003747384.jpg)
+![ERD 설계](https://github.com/user-attachments/assets/5f808cbb-e782-4173-b02c-ca2044964f11)
