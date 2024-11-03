@@ -270,6 +270,8 @@ obj/
 
 # JIRA plugin
 
+**/config_oauth.properties
+
 # Mongo Explorer plugin
 .idea/mongoSettings.xml
 
