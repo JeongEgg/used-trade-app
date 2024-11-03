@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true"> <!-- 눌렸을 때 -->
+        <shape android:shape="rectangle">
+            <solid android:color="#4A6FBC"/> <!-- 눌렸을 때 색상 -->
+            <corners android:radius="10dp"/>
+        </shape>
+    </item>
+    <item android:state_focused="true"> <!-- 포커스 상태 -->
+        <shape android:shape="rectangle">
+            <solid android:color="#4A6FBC"/> <!-- 포커스 색상 -->
+            <corners android:radius="10dp"/>
+        </shape>
+    </item>
+    <item> <!-- 기본 상태 -->
+        <shape android:shape="rectangle">
+            <solid android:color="#6284DC"/> <!-- 기본 색상 -->
+            <corners android:radius="10dp"/>
+        </shape>
+    </item>
+</selector>
