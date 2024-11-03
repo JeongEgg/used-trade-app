@@ -18,6 +18,18 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
+            <intent-filter android:label="Google OAuth Redirect">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- 여기서 "localhost"는 Android에서 사용 불가하므로 고유한 호스트를 지정 -->
+                <data
+                    android:scheme="http"
+                    android:host="localhost"
+                    android:path="/login/oauth2/code/google" />
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

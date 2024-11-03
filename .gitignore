@@ -281,6 +281,4 @@ obj/
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,intellij+all,java,kotlin,androidstudio
 
-
-**/google-services.json
-**/strings.xml
+**/config_oauth.properties
