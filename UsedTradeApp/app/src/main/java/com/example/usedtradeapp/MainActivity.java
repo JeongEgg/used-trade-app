@@ -1,12 +1,14 @@
 package com.example.usedtradeapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.usedtradeapp.activity.LoginActivity;
 import com.example.usedtradeapp.oauth.response.GoogleUserInfoResponse;
 import com.example.usedtradeapp.oauth.api.UserService;
 import com.example.usedtradeapp.oauth.utils.PropertiesUtil;
@@ -37,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
         // 앱이 실행될 때 사용자 정보를 로드
         loadUserInfo();
-
     }
 
     private void loadUserInfo() {
@@ -60,6 +61,11 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             Log.d("UserInfo", "No user info found");
+            // 로그인 화면으로 이동
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
         }
     }
 

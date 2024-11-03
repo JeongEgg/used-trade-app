@@ -48,6 +48,12 @@ public class LoginActivity extends AppCompatActivity {
             googleAuthClient.authenticate(CLIENT_ID, REDIRECT_URI);
         });
 
+        // 회원가입 버튼 클릭 시 회원가입 화면으로 이동
+        findViewById(R.id.btn_sign_up_page).setOnClickListener(view -> {
+            Intent signUpIntent = new Intent(this, SignUpActivity.class);
+            startActivity(signUpIntent);
+        });
+
         // 앱이 리디렉션 URI로 실행되었는지 확인하고, 인가 코드 추출
         handleIntent(getIntent());
     }

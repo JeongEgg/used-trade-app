@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.example.usedtradeapp.oauth.request.UserInfoRequest;
 import com.example.usedtradeapp.oauth.response.GoogleUserInfoResponse;
-import com.example.usedtradeapp.oauth.retrofit.RetrofitClient;
+import com.example.usedtradeapp.common.retrofit.RetrofitClient;
 
 import retrofit2.Call;
 import retrofit2.Callback;
