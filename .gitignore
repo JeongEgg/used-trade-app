@@ -280,6 +280,3 @@ obj/
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,intellij+all,java,kotlin,androidstudio
-
-**/config_oauth.properties
-**/application-oauth.properties
