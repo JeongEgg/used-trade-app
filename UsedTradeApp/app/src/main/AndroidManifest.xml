@@ -16,6 +16,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter android:label="Google OAuth Redirect">
@@ -26,9 +29,9 @@
 
                 <!-- 여기서 "localhost"는 Android에서 사용 불가하므로 고유한 호스트를 지정 -->
                 <data
-                    android:scheme="http"
                     android:host="localhost"
-                    android:path="/login/oauth2/code/google" />
+                    android:path="/login/oauth2/code/google"
+                    android:scheme="http" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

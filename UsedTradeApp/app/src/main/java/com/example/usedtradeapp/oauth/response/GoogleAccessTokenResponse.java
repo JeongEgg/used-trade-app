@@ -1,4 +1,4 @@
-package com.example.usedtradeapp.response;
+package com.example.usedtradeapp.oauth.response;
 
 public class GoogleAccessTokenResponse {
     private String access_token;

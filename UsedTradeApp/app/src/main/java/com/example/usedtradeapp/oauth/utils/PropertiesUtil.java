@@ -1,4 +1,4 @@
-package com.example.usedtradeapp.utils;
+package com.example.usedtradeapp.oauth.utils;
 
 import android.content.Context;
 

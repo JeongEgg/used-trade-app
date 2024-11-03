@@ -1,4 +1,4 @@
-package com.example.usedtradeapp.retrofit;
+package com.example.usedtradeapp.oauth.retrofit;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

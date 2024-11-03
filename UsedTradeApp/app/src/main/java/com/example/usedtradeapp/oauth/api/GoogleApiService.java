@@ -1,7 +1,7 @@
-package com.example.usedtradeapp.api;
+package com.example.usedtradeapp.oauth.api;
 
-import com.example.usedtradeapp.response.GoogleAccessTokenResponse;
-import com.example.usedtradeapp.response.GoogleUserInfoResponse;
+import com.example.usedtradeapp.oauth.response.GoogleAccessTokenResponse;
+import com.example.usedtradeapp.oauth.response.GoogleUserInfoResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;

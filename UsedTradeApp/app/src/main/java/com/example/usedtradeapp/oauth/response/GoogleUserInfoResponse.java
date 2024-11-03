@@ -1,4 +1,4 @@
-package com.example.usedtradeapp.response;
+package com.example.usedtradeapp.oauth.response;
 
 import com.google.gson.annotations.SerializedName;
 
