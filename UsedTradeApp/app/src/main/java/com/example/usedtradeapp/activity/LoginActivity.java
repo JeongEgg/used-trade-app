@@ -1,4 +1,4 @@
-package com.example.usedtradeapp.Activity;
+package com.example.usedtradeapp.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -10,16 +10,14 @@ import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.usedtradeapp.R;
-import com.example.usedtradeapp.oauth.GoogleAuthClient;
+import com.example.usedtradeapp.oauth.redirect.GoogleAuthClient;
 import com.example.usedtradeapp.oauth.api.GoogleApiService;
 import com.example.usedtradeapp.oauth.response.GoogleAccessTokenResponse;
 import com.example.usedtradeapp.oauth.response.GoogleUserInfoResponse;
 import com.example.usedtradeapp.oauth.retrofit.GoogleRetrofitClient;
+import com.example.usedtradeapp.oauth.api.UserService;
 import com.google.gson.Gson;
 
 import retrofit2.Call;
@@ -115,6 +113,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.d("UserInfo", "User Info: " + response.body().toString());
                     saveUserInfo(response.body()); // 유저 정보를 저장
+                    UserService.sendUserInfoToServer(response.body());
                 } else {
                     Log.e("UserInfo", "Failed to get user info: " + response.message());
                 }
@@ -137,4 +136,5 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString(USER_INFO_KEY, userInfoJson);
         editor.apply();
     }
+
 }

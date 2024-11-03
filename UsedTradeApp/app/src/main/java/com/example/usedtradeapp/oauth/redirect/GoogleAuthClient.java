@@ -1,4 +1,4 @@
-package com.example.usedtradeapp.oauth;
+package com.example.usedtradeapp.oauth.redirect;
 
 import android.content.Context;
 import android.content.Intent;

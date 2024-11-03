@@ -1,28 +1,19 @@
 package com.example.usedtradeapp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.usedtradeapp.oauth.api.GoogleApiService;
-import com.example.usedtradeapp.oauth.GoogleAuthClient;
-import com.example.usedtradeapp.oauth.response.GoogleAccessTokenResponse;
 import com.example.usedtradeapp.oauth.response.GoogleUserInfoResponse;
-import com.example.usedtradeapp.oauth.retrofit.GoogleRetrofitClient;
+import com.example.usedtradeapp.oauth.api.UserService;
 import com.example.usedtradeapp.oauth.utils.PropertiesUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import java.util.Properties;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 GoogleUserInfoResponse userInfo = gson.fromJson(userInfoJson, GoogleUserInfoResponse.class);
                 logUserInfo(userInfo);
+                UserService.sendUserInfoToServer(userInfo);
+
                 // userInfo 사용
             } catch (JsonSyntaxException e) {
                 Log.e("UserInfo", "JSON Syntax Error: " + e.getMessage());
