@@ -18,7 +18,10 @@ import com.example.usedtradeapp.oauth.response.GoogleAccessTokenResponse;
 import com.example.usedtradeapp.oauth.response.GoogleUserInfoResponse;
 import com.example.usedtradeapp.oauth.retrofit.GoogleRetrofitClient;
 import com.example.usedtradeapp.oauth.api.UserService;
+import com.example.usedtradeapp.oauth.utils.PropertiesUtil;
 import com.google.gson.Gson;
+
+import java.util.Properties;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,6 +47,10 @@ public class LoginActivity extends AppCompatActivity {
         GoogleAuthClient googleAuthClient = new GoogleAuthClient(this);
 
         // 로그인 버튼 클릭 시 OAuth 인증 페이지로 이동
+        Properties properties = PropertiesUtil.loadProperties(this);
+        CLIENT_ID = properties.getProperty("CLIENT_ID");
+        REDIRECT_URI = properties.getProperty("REDIRECT_URI");
+        CLIENT_SECRET = properties.getProperty("CLIENT_SECRET");
         findViewById(R.id.sign_in_button).setOnClickListener(view -> {
             googleAuthClient.authenticate(CLIENT_ID, REDIRECT_URI);
         });
@@ -58,6 +65,12 @@ public class LoginActivity extends AppCompatActivity {
         handleIntent(getIntent());
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("LoginActivity onResume","");
+        handleIntent(getIntent());
+    }
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
