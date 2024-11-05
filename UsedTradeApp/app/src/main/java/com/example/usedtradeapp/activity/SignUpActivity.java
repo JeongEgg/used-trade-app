@@ -1,5 +1,7 @@
 package com.example.usedtradeapp.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -14,14 +16,19 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.usedtradeapp.R;
 import com.example.usedtradeapp.common.retrofit.RetrofitClient;
+import com.example.usedtradeapp.oauth.response.GoogleUserInfoResponse;
 import com.example.usedtradeapp.signup.api.SignUpApiService;
 import com.example.usedtradeapp.signup.request.SignUpRequest;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SignUpActivity extends AppCompatActivity {
+
+    private static final String PREFS_NAME = "UserPrefs"; // SharedPreferences 이름
+    private static final String USER_INFO_KEY = "userInfo"; // 저장할 유저 정보 키
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,5 +76,16 @@ public class SignUpActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "회원가입 에러: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void saveUserInfo(GoogleUserInfoResponse userInfo) {
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        // 사용자 정보를 JSON으로 변환하여 저장 (예시로 toString() 사용, 실제로는 JSON 라이브러리 사용 권장)
+        Gson gson = new Gson();
+        String userInfoJson = gson.toJson(userInfo);
+        editor.putString(USER_INFO_KEY, userInfoJson);
+        editor.apply();
     }
 }

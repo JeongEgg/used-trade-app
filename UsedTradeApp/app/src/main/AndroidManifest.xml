@@ -20,10 +20,8 @@
             android:exported="false" />
         <activity
             android:name=".activity.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleTop">
             <intent-filter android:label="Google OAuth Redirect">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -36,6 +34,11 @@
                     android:path="/login/oauth2/code/google"
                     android:scheme="http" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

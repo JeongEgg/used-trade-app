@@ -64,13 +64,6 @@ public class LoginActivity extends AppCompatActivity {
         // 앱이 리디렉션 URI로 실행되었는지 확인하고, 인가 코드 추출
         handleIntent(getIntent());
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d("LoginActivity onResume","");
-        handleIntent(getIntent());
-    }
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
