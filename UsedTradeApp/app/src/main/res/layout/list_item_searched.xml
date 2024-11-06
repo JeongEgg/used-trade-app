@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/imageview_thumnail"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/product_image_prev"
+        android:src="@drawable/icon_chat_default_image_24"
+        android:scaleType="centerCrop"/>
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:text="제목입니다."/>
+        <TextView
+            android:id="@+id/tv_prev_content"
+            android:layout_width="250dp"
+            android:layout_height="25dp"
+            android:text="삼품 설명 컨텐츠 입니다."/>
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="250dp"
+            android:layout_height="25dp"
+            android:textSize="18dp"
+            android:gravity="end"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="10000원"/>
+    </LinearLayout>
+
+</LinearLayout>
