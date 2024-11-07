@@ -5,10 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
-import android.widget.FrameLayout;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -16,6 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.usedtradeapp.activity.LoginActivity;
+import com.example.usedtradeapp.activity.RegisterActivity;
 import com.example.usedtradeapp.databinding.ActivityMainBinding;
 import com.example.usedtradeapp.oauth.response.GoogleUserInfoResponse;
 import com.example.usedtradeapp.oauth.api.UserService;
@@ -23,6 +21,8 @@ import com.example.usedtradeapp.oauth.utils.PropertiesUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Properties;
 
@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
+    private static final int REGISTER_REQUEST_CODE = 100;
+    private int previousSelectedItemId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +49,27 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_register, R.id.navigation_chat, R.id.navigation_profile)
+                R.id.navigation_home, R.id.navigation_chat, R.id.navigation_profile)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+        // Bottom Navigation에서 등록 버튼을 클릭한 경우에는 등록 페이지 액티비티를 실행
+        navView.setOnItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.navigation_register) {
+                previousSelectedItemId = navView.getSelectedItemId();
+
+
+                Intent intent = new Intent(this, RegisterActivity.class);
+                startActivityForResult(intent, REGISTER_REQUEST_CODE);
+                return true;
+            } else {
+
+                previousSelectedItemId = item.getItemId(); // 선택 항목 업데이트
+                NavigationUI.onNavDestinationSelected(item, navController);
+                return true;
+            }
+        });
 
         // properties 값 가져오기
         Properties properties = PropertiesUtil.loadProperties(this);
@@ -59,6 +79,16 @@ public class MainActivity extends AppCompatActivity {
 
         // 앱이 실행될 때 사용자 정보를 로드
         loadUserInfo();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REGISTER_REQUEST_CODE && resultCode == RESULT_OK) {
+            // 이전 선택 항목으로 BottomNavigationView 업데이트
+            binding.navView.setSelectedItemId(previousSelectedItemId);
+        }
     }
 
     private void loadUserInfo() {
