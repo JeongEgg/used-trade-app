@@ -26,4 +26,35 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/tv_chat_title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="1:1 채팅"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginLeft="20dp"
+        android:gravity="center_vertical"
+        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintTop_toBottomOf="@id/layout_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#C1C1C1"
+        app:layout_constraintHeight_percent="0.005"
+        app:layout_constraintTop_toBottomOf="@id/tv_chat_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <ListView
+        android:id="@+id/listview_chat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.875"
+        tools:listitem="@layout/list_item_chat_prev"
+        app:layout_constraintTop_toBottomOf="@id/view1"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -147,6 +147,7 @@ public class LoginActivity extends AppCompatActivity {
         String userInfoJson = gson.toJson(userInfo);
         editor.putString(USER_INFO_KEY, userInfoJson);
         editor.apply();
+        finish();
     }
 
 }
