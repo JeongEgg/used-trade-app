@@ -14,7 +14,7 @@ public class LoginController {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-    @PostMapping("/user/info") // 클라이언트 요청을 받을 엔드포인트
+    @PostMapping("/api/social-login") // 클라이언트 요청을 받을 엔드포인트
     public ResponseEntity<Void> receiveUserInfo(@RequestBody UserInfoRequest userInfoRequest) {
         // 로그로 사용자 정보 출력
         logger.info("Received User Info: UserID = {}, Name = {}, Email = {}",

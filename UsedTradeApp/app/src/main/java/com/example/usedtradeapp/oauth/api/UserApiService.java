@@ -8,6 +8,6 @@ import retrofit2.http.POST;
 
 public interface UserApiService {
 
-    @POST("user/info") // 스프링 서버의 엔드포인트를 설정합니다.
+    @POST("api/social-login") // 스프링 서버의 엔드포인트를 설정합니다.
     Call<Void> sendUserInfo(@Body UserInfoRequest userInfoRequest);
 }
