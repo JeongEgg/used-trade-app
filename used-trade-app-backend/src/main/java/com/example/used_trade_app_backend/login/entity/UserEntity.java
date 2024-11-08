@@ -1,8 +1,10 @@
 package com.example.used_trade_app_backend.login.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -10,7 +12,9 @@ import java.util.UUID;
 @Entity
 @Builder
 @Getter
-@Table(name = "UserEntity")
+@Table(name = "user_entity")
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserEntity {
 
     @Id
