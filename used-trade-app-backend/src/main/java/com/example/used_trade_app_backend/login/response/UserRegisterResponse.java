@@ -12,4 +12,5 @@ public class UserRegisterResponse {
     private String socialId;
     private String username;
     private String nickname;
+    private String token;
 }

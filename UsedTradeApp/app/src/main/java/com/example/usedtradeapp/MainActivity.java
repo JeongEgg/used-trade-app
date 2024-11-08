@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String PREFS_NAME = "UserPrefs"; // SharedPreferences 이름
     private static final String USER_INFO_KEY = "userInfo"; // 저장할 유저 정보 키
+    private static final String JWT_TOKEN_KEY = "jwtToken";
 
     private String CLIENT_ID;
     private String CLIENT_SECRET;
@@ -46,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // JWT 토큰 확인
+        checkJwtToken();
+
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -78,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         CLIENT_SECRET = properties.getProperty("CLIENT_SECRET");
 
         // 앱이 실행될 때 사용자 정보를 로드
-        loadUserInfo();
+//        loadUserInfo();
     }
 
     @Override
@@ -88,6 +93,23 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REGISTER_REQUEST_CODE && resultCode == RESULT_OK) {
             // 이전 선택 항목으로 BottomNavigationView 업데이트
             binding.navView.setSelectedItemId(previousSelectedItemId);
+        }
+    }
+
+    private void checkJwtToken() {
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        String jwtToken = prefs.getString(JWT_TOKEN_KEY, null);
+
+        if (jwtToken == null) {
+            Log.d("MainActivity", "No JWT Token found, redirecting to LoginActivity.");
+            // JWT 토큰이 없으면 로그인 화면으로 이동
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();  // 현재 Activity 종료
+        } else {
+            Log.d("MainActivity", "JWT Token found.");
+            Log.d("MainActivity", "JWT Token : "+jwtToken);
         }
     }
 
@@ -101,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 GoogleUserInfoResponse userInfo = gson.fromJson(userInfoJson, GoogleUserInfoResponse.class);
                 logUserInfo(userInfo);
-                UserService.sendUserInfoToServer(userInfo);
+                UserService.sendUserInfoToServer(getApplicationContext(),userInfo);
 
                 // userInfo 사용
             } catch (JsonSyntaxException e) {

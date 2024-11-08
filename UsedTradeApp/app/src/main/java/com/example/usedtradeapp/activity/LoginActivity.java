@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String PREFS_NAME = "UserPrefs"; // SharedPreferences 이름
     private static final String USER_INFO_KEY = "userInfo"; // 저장할 유저 정보 키
+    private static final String JWT_TOKEN_KEY = "jwtToken";
 
     private String CLIENT_ID;
     private String CLIENT_SECRET;
@@ -42,6 +43,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
+
+        if (checkJwtToken()) {
+            finish();
+            return;
+        }
 
         // GoogleAuthClient 인스턴스 생성
         GoogleAuthClient googleAuthClient = new GoogleAuthClient(this);
@@ -125,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.d("UserInfo", "User Info: " + response.body().toString());
                     saveUserInfo(response.body()); // 유저 정보를 저장
-                    UserService.sendUserInfoToServer(response.body());
+                    UserService.sendUserInfoToServer(getApplicationContext(), response.body());
                 } else {
                     Log.e("UserInfo", "Failed to get user info: " + response.message());
                 }
@@ -147,7 +153,18 @@ public class LoginActivity extends AppCompatActivity {
         String userInfoJson = gson.toJson(userInfo);
         editor.putString(USER_INFO_KEY, userInfoJson);
         editor.apply();
-        finish();
+//        finish();
     }
 
+    private boolean checkJwtToken() {
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.contains(JWT_TOKEN_KEY);
+    }
+
+    public static void saveJwtToken(Context context, String jwtToken) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(JWT_TOKEN_KEY, jwtToken);
+        editor.apply();
+    }
 }

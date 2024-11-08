@@ -1,6 +1,7 @@
 package com.example.usedtradeapp.oauth.api;
 
 import com.example.usedtradeapp.oauth.request.UserInfoRequest;
+import com.example.usedtradeapp.oauth.response.UserRegisterResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -8,6 +9,6 @@ import retrofit2.http.POST;
 
 public interface UserApiService {
 
-    @POST("api/social-login") // 스프링 서버의 엔드포인트를 설정합니다.
-    Call<Void> sendUserInfo(@Body UserInfoRequest userInfoRequest);
+    @POST("/api/social-login")
+    Call<UserRegisterResponse> sendUserInfo(@Body UserInfoRequest userInfoRequest);
 }
