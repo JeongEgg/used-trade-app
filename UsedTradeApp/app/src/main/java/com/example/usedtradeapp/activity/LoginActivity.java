@@ -130,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<GoogleUserInfoResponse> call, Response<GoogleUserInfoResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.d("UserInfo", "User Info: " + response.body().toString());
-                    saveUserInfo(response.body()); // 유저 정보를 저장
+//                    saveUserInfo(response.body()); // 유저 정보를 저장
                     UserService.sendUserInfoToServer(getApplicationContext(), response.body());
                 } else {
                     Log.e("UserInfo", "Failed to get user info: " + response.message());

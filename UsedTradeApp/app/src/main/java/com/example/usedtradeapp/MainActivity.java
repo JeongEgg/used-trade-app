@@ -15,12 +15,8 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.usedtradeapp.activity.LoginActivity;
 import com.example.usedtradeapp.activity.RegisterActivity;
 import com.example.usedtradeapp.databinding.ActivityMainBinding;
-import com.example.usedtradeapp.oauth.response.GoogleUserInfoResponse;
-import com.example.usedtradeapp.oauth.api.UserService;
 import com.example.usedtradeapp.oauth.utils.PropertiesUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -82,8 +78,6 @@ public class MainActivity extends AppCompatActivity {
         REDIRECT_URI = properties.getProperty("REDIRECT_URI");
         CLIENT_SECRET = properties.getProperty("CLIENT_SECRET");
 
-        // 앱이 실행될 때 사용자 정보를 로드
-//        loadUserInfo();
     }
 
     @Override
@@ -111,41 +105,5 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MainActivity", "JWT Token found.");
             Log.d("MainActivity", "JWT Token : "+jwtToken);
         }
-    }
-
-    private void loadUserInfo() {
-        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        String userInfoJson = prefs.getString(USER_INFO_KEY, null);
-
-        if (userInfoJson != null) {
-            Log.d("UserInfo", "Loaded user info: " + userInfoJson);
-            try {
-                Gson gson = new Gson();
-                GoogleUserInfoResponse userInfo = gson.fromJson(userInfoJson, GoogleUserInfoResponse.class);
-                logUserInfo(userInfo);
-                UserService.sendUserInfoToServer(getApplicationContext(),userInfo);
-
-                // userInfo 사용
-            } catch (JsonSyntaxException e) {
-                Log.e("UserInfo", "JSON Syntax Error: " + e.getMessage());
-            } catch (Exception e) {
-                Log.e("UserInfo", "Error: " + e.getMessage());
-            }
-        } else {
-            Log.d("UserInfo", "No user info found");
-            // 로그인 화면으로 이동
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
-        }
-    }
-
-    private void logUserInfo(GoogleUserInfoResponse userInfo) {
-        // 사용자 정보를 한 줄씩 로그로 출력
-        Log.d("UserInfo", "User ID: " + userInfo.getId());
-        Log.d("UserInfo", "User Name: " + userInfo.getName());
-        Log.d("UserInfo", "User Email: " + userInfo.getEmail());
-        Log.d("UserInfo", "User Picture: " + userInfo.getPictureUrl());
     }
 }
