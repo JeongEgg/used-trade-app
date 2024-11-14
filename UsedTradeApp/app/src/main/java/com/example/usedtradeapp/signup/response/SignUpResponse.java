@@ -1,7 +1,16 @@
 package com.example.usedtradeapp.signup.response;
 
 public class SignUpResponse {
+    private int errorCode;
     private String message;
+
+    public int getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
+    }
 
     public String getMessage() {
         return message;

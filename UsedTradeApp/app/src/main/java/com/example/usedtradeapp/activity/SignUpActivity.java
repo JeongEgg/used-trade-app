@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -22,6 +23,11 @@ import com.example.usedtradeapp.signup.request.SignUpRequest;
 import com.example.usedtradeapp.signup.response.SignUpResponse;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,11 +37,17 @@ public class SignUpActivity extends AppCompatActivity {
     private static final String PREFS_NAME = "UserPrefs"; // SharedPreferences 이름
     private static final String USER_INFO_KEY = "userInfo"; // 저장할 유저 정보 키
 
+    private TextView tvErrorEmail;
+    private TextView tvErrorPassword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_sign_up);
+
+        tvErrorEmail = findViewById(R.id.tv_error_email);
+        tvErrorPassword = findViewById(R.id.tv_error_password);
 
         Button btnSignUp = findViewById(R.id.btn_sign_up);
         btnSignUp.setOnClickListener(v -> {
@@ -43,6 +55,9 @@ public class SignUpActivity extends AppCompatActivity {
             String email = ((EditText) findViewById(R.id.et_email)).getText().toString().trim();
             String password = ((EditText) findViewById(R.id.et_password1)).getText().toString().trim();
             String confirmPassword = ((EditText) findViewById(R.id.et_password2)).getText().toString().trim();
+
+            tvErrorEmail.setText("");
+            tvErrorPassword.setText("");
 
             if (!password.isEmpty() && password.equals(confirmPassword)) {
                 signUpUser(name, email, password);
@@ -61,13 +76,27 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<SignUpResponse> call, Response<SignUpResponse> response) {
                 if (response.isSuccessful()) {
-                    SignUpResponse responseBody = response.body();  // Get the response as SignUpResponse
+                    SignUpResponse responseBody = response.body();
                     Log.d("SignUpActivity", "응답 : " + responseBody.getMessage());
-                    Toast.makeText(getApplicationContext(), "응답 : " + responseBody.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), responseBody.getMessage(), Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Log.e("SignUpActivity", "회원가입 실패: " + response.message());
-                    Toast.makeText(getApplicationContext(), "회원가입 실패: " + response.message(), Toast.LENGTH_SHORT).show();
+                    String errorMessage = "";
+                    int errorCode = 0;
+
+                    if (response.errorBody() != null) {
+                        try {
+                            String errorResponse = response.errorBody().string();
+                            JSONObject jsonObject = new JSONObject(errorResponse);
+                            errorMessage = jsonObject.getString("message");
+                            errorCode = jsonObject.getInt("errorCode");
+                        } catch (IOException | JSONException e) {
+                            errorMessage = "알 수 없는 오류가 발생했습니다.";
+                        }
+                    }
+
+                    Log.e("SignUpActivity", "회원가입 실패: " + errorMessage);
+                    displayErrorMessage(errorCode, errorMessage);
                 }
             }
 
@@ -77,6 +106,20 @@ public class SignUpActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "회원가입 에러: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void displayErrorMessage(int errorCode, String errorMessage) {
+        switch (errorCode) {
+            case 1001:
+                tvErrorEmail.setText(errorMessage);
+                break;
+            case 1003:
+                tvErrorPassword.setText(errorMessage);
+                break;
+            default:
+                Toast.makeText(getApplicationContext(), "회원가입 실패: " + errorMessage, Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
     private void saveUserInfo(GoogleUserInfoResponse userInfo) {

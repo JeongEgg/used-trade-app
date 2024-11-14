@@ -8,5 +8,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class SignUpResponse {
+    private final int errorCode;
     private String message;
 }

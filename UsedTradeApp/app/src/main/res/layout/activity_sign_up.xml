@@ -63,6 +63,7 @@
                 android:layout_marginTop="10dp"
                 android:paddingLeft="20dp"
                 android:textColor="#707070"/>
+
             <TextView
                 android:id="@+id/tv_email"
                 android:layout_width="match_parent"
@@ -88,6 +89,13 @@
                 android:paddingLeft="20dp"
                 android:textColor="#707070"/>
             <TextView
+                android:id="@+id/tv_error_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:textColor="#FB0000"
+                />
+            <TextView
                 android:id="@+id/tv_password1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -111,6 +119,13 @@
                 android:layout_marginTop="10dp"
                 android:paddingLeft="20dp"
                 android:textColor="#707070"/>
+            <TextView
+                android:id="@+id/tv_error_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:textColor="#FB0000"
+                />
             <TextView
                 android:id="@+id/tv_password2"
                 android:layout_width="match_parent"

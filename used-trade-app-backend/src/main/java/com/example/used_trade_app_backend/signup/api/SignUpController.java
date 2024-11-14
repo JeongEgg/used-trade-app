@@ -26,8 +26,13 @@ public class SignUpController {
         logger.info("Received SignUpRequest: name={}, email={}, password={}",
                 signUpRequest.getName(), signUpRequest.getEmail(), signUpRequest.getPassword());
 
-        String signupResponseMessage = userService.signup(signUpRequest);
-        SignUpResponse signupResponse = new SignUpResponse(signupResponseMessage);
-        return ResponseEntity.ok().body(signupResponse);
+        SignUpResponse serviceResponse = userService.signup(signUpRequest);
+        if (serviceResponse.getErrorCode() == 0) {
+            // Successful sign-up
+            return ResponseEntity.ok().body(serviceResponse);
+        } else {
+            // Handle errors by setting the appropriate status code and error response
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(serviceResponse);
+        }
     }
 }
