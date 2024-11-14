@@ -30,8 +30,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String PREFS_NAME = "UserPrefs"; // SharedPreferences 이름
-    private static final String USER_INFO_KEY = "userInfo"; // 저장할 유저 정보 키
-    private static final String JWT_TOKEN_KEY = "jwtToken";
+    private static final String JWT_TOKEN_KEY = "jwtToken"; // JWT 토큰 저장 키
 
     private String CLIENT_ID;
     private String CLIENT_SECRET;
@@ -70,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         // 앱이 리디렉션 URI로 실행되었는지 확인하고, 인가 코드 추출
         handleIntent(getIntent());
     }
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -130,7 +130,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<GoogleUserInfoResponse> call, Response<GoogleUserInfoResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.d("UserInfo", "User Info: " + response.body().toString());
-//                    saveUserInfo(response.body()); // 유저 정보를 저장
                     UserService.sendUserInfoToServer(getApplicationContext(), response.body());
                 } else {
                     Log.e("UserInfo", "Failed to get user info: " + response.message());
@@ -142,18 +141,6 @@ public class LoginActivity extends AppCompatActivity {
                 Log.e("UserInfo", "Error occurred: " + t.getMessage());
             }
         });
-    }
-
-    private void saveUserInfo(GoogleUserInfoResponse userInfo) {
-        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-
-        // 사용자 정보를 JSON으로 변환하여 저장 (예시로 toString() 사용, 실제로는 JSON 라이브러리 사용 권장)
-        Gson gson = new Gson();
-        String userInfoJson = gson.toJson(userInfo);
-        editor.putString(USER_INFO_KEY, userInfoJson);
-        editor.apply();
-//        finish();
     }
 
     private boolean checkJwtToken() {

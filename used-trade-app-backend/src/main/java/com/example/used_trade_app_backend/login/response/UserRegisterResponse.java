@@ -8,9 +8,5 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class UserRegisterResponse {
-    private int id;
-    private String socialId;
-    private String username;
-    private String nickname;
     private String token;
 }

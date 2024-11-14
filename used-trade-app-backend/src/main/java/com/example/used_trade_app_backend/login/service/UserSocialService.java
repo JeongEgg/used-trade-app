@@ -18,7 +18,7 @@ public class UserSocialService {
     private final UserSocialRepository userSocialRepository;
 
     @Transactional
-    public UserRegisterResponse createUser(UserRegisterRequest userRequest) {
+    public String createUser(UserRegisterRequest userRequest) {
         UserSocialEntity user = userRequest.toEntity();
         Optional<UserSocialEntity> existingUser = userSocialRepository.findBySocialIdAndUsername(user.getSocialId(), user.getUsername());
         if (existingUser.isPresent()) {
@@ -27,6 +27,6 @@ public class UserSocialService {
         user = userSocialRepository.save(user);
         String token = JwtUtil.generateToken(user.getSocialId(), user.getUsername());
 
-        return new UserRegisterResponse(user.getId(), user.getSocialId(), user.getUsername(), user.getNickname(), token);
+        return token;
     }
 }

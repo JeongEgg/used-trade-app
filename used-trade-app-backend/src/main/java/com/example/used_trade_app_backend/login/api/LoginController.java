@@ -23,7 +23,7 @@ public class LoginController {
 
     @PostMapping("/social-login") // 클라이언트 요청을 받을 엔드포인트
     public ResponseEntity<UserRegisterResponse> receiveUserInfo(@RequestBody UserRegisterRequest userRequest) {
-        UserRegisterResponse userResponse = userSocialService.createUser(userRequest);
-        return ResponseEntity.ok(userResponse);
+        String token = userSocialService.createUser(userRequest);
+        return ResponseEntity.ok(new UserRegisterResponse(token)); // token만 반환
     }
 }

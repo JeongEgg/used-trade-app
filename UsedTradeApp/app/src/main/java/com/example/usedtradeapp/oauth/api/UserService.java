@@ -31,19 +31,14 @@ public class UserService {
             @Override
             public void onResponse(Call<UserRegisterResponse> call, Response<UserRegisterResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    // 응답으로 받은 사용자 정보와 JWT 토큰
+                    // 응답으로 받은 JWT 토큰만 저장
                     UserRegisterResponse userResponse = response.body();
 
                     Log.d(TAG, "User info sent to server successfully");
-                    Log.d(TAG, "User ID: " + userResponse.getId());
-                    Log.d(TAG, "Social ID: " + userResponse.getSocialId());
-                    Log.d(TAG, "Username: " + userResponse.getUsername());
-                    Log.d(TAG, "Nickname: " + userResponse.getNickname());
                     Log.d(TAG, "JWT Token: " + userResponse.getToken());
 
-                    // JWT 토큰을 SharedPreferences에 저장하거나 다른 곳에서 사용할 수 있음
-                    LoginActivity.saveJwtToken(context.getApplicationContext()
-                            , userResponse.getToken());
+                    // JWT 토큰을 SharedPreferences에 저장
+                    LoginActivity.saveJwtToken(context.getApplicationContext(), userResponse.getToken());
                 } else {
                     Log.e(TAG, "Failed to send user info: " + response.message());
                 }
