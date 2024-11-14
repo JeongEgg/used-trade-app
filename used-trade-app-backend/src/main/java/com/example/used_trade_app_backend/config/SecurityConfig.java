@@ -19,7 +19,8 @@ public class SecurityConfig {
                 .httpBasic((auth) -> auth.disable())
 
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/api/social-login").permitAll()
+                        .requestMatchers("/api/social-login",
+                                "/api/sign-up").permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();

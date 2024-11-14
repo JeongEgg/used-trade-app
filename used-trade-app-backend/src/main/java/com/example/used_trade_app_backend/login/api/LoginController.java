@@ -1,10 +1,8 @@
 package com.example.used_trade_app_backend.login.api;
 
-import com.example.used_trade_app_backend.login.entity.UserEntity;
-import com.example.used_trade_app_backend.login.request.UserInfoRequest;
 import com.example.used_trade_app_backend.login.request.UserRegisterRequest;
 import com.example.used_trade_app_backend.login.response.UserRegisterResponse;
-import com.example.used_trade_app_backend.login.service.UserService;
+import com.example.used_trade_app_backend.login.service.UserSocialService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,11 +19,11 @@ public class LoginController {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-    private final UserService userService;
+    private final UserSocialService userSocialService;
 
     @PostMapping("/social-login") // 클라이언트 요청을 받을 엔드포인트
     public ResponseEntity<UserRegisterResponse> receiveUserInfo(@RequestBody UserRegisterRequest userRequest) {
-        UserRegisterResponse userResponse = userService.createUser(userRequest);
+        UserRegisterResponse userResponse = userSocialService.createUser(userRequest);
         return ResponseEntity.ok(userResponse);
     }
 }

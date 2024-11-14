@@ -19,6 +19,7 @@ import com.example.usedtradeapp.common.retrofit.RetrofitClient;
 import com.example.usedtradeapp.oauth.response.GoogleUserInfoResponse;
 import com.example.usedtradeapp.signup.api.SignUpApiService;
 import com.example.usedtradeapp.signup.request.SignUpRequest;
+import com.example.usedtradeapp.signup.response.SignUpResponse;
 import com.google.gson.Gson;
 
 import retrofit2.Call;
@@ -55,24 +56,24 @@ public class SignUpActivity extends AppCompatActivity {
         SignUpApiService apiService = RetrofitClient.createAuthService().create(SignUpApiService.class);
         SignUpRequest signUpRequest = new SignUpRequest(name, email, password);
 
-        Call<Void> call = apiService.signUp(signUpRequest);
-        call.enqueue(new Callback<Void>() {
+        Call<SignUpResponse> call = apiService.signUp(signUpRequest);
+        call.enqueue(new Callback<SignUpResponse>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<SignUpResponse> call, Response<SignUpResponse> response) {
                 if (response.isSuccessful()) {
-                    Log.d("SignUp", "User signed up successfully.");
-                    Toast.makeText(getApplicationContext(), "회원가입 성공!", Toast.LENGTH_SHORT).show();
-                    // 성공적으로 회원가입 되었을 때의 처리
+                    SignUpResponse responseBody = response.body();  // Get the response as SignUpResponse
+                    Log.d("SignUpActivity", "응답 : " + responseBody.getMessage());
+                    Toast.makeText(getApplicationContext(), "응답 : " + responseBody.getMessage(), Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Log.e("SignUp", "Sign-up failed: " + response.message());
+                    Log.e("SignUpActivity", "회원가입 실패: " + response.message());
                     Toast.makeText(getApplicationContext(), "회원가입 실패: " + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Log.e("SignUp", "Sign-up error: " + t.getMessage());
+            public void onFailure(Call<SignUpResponse> call, Throwable t) {
+                Log.e("SignUpActivity", "회원가입 에러 : " + t.getMessage());
                 Toast.makeText(getApplicationContext(), "회원가입 에러: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

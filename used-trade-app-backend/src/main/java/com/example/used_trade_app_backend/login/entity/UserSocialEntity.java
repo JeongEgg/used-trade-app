@@ -7,15 +7,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Builder
 @Getter
-@Table(name = "user_entity")
+@Table(name = "user_social_entity")
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity {
+public class UserSocialEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

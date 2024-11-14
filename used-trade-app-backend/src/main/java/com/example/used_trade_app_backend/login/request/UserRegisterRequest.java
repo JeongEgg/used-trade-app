@@ -1,6 +1,6 @@
 package com.example.used_trade_app_backend.login.request;
 
-import com.example.used_trade_app_backend.login.entity.UserEntity;
+import com.example.used_trade_app_backend.login.entity.UserSocialEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,8 +13,8 @@ public class UserRegisterRequest {
     private String name;
     private String email;
 
-    public UserEntity toEntity() {
-        return UserEntity.builder()
+    public UserSocialEntity toEntity() {
+        return UserSocialEntity.builder()
                 .socialId(this.email)
                 .username(this.name)
                 .nickname(generateRandomNickname())  // Generates a random nickname
