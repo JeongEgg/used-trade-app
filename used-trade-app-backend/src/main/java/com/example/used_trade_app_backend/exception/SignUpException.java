@@ -8,5 +8,4 @@ import lombok.Getter;
 public class SignUpException extends RuntimeException{
 
     private final ErrorCode errorCode;
-    private final String message;
 }

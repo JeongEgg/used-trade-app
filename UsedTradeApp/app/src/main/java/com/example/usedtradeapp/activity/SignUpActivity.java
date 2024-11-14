@@ -62,7 +62,7 @@ public class SignUpActivity extends AppCompatActivity {
             if (!password.isEmpty() && password.equals(confirmPassword)) {
                 signUpUser(name, email, password);
             } else {
-                Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                tvErrorPassword.setText("비밀번호가 일치하지 않습니다.");
             }
         });
     }
@@ -113,6 +113,8 @@ public class SignUpActivity extends AppCompatActivity {
             case 1001:
                 tvErrorEmail.setText(errorMessage);
                 break;
+            case 1002:
+                tvErrorPassword.setText(errorMessage);
             case 1003:
                 tvErrorPassword.setText(errorMessage);
                 break;
