@@ -20,7 +20,8 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/api/social-login",
-                                "/api/sign-up").permitAll()
+                                "/api/sign-up",
+                                "/api/login").permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();

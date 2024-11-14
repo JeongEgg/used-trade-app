@@ -25,7 +25,7 @@ public class UserSocialService {
             throw new IllegalStateException("동일한 이메일로 계정이 이미 존재합니다.");
         }
         user = userSocialRepository.save(user);
-        String token = JwtUtil.generateToken(user.getSocialId(), user.getUsername());
+        String token = JwtUtil.generateTokenBySocialLogin(user.getSocialId(), user.getUsername());
 
         return token;
     }
