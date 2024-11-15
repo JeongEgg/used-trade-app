@@ -3,7 +3,7 @@ package com.example.used_trade_app_backend.domain.login.service;
 import com.example.used_trade_app_backend.exception.ErrorCode;
 import com.example.used_trade_app_backend.domain.login.request.UserLoginRequest;
 import com.example.used_trade_app_backend.domain.login.response.UserLoginResponse;
-import com.example.used_trade_app_backend.domain.login.utils.JwtUtil;
+import com.example.used_trade_app_backend.utils.JwtUtil;
 import com.example.used_trade_app_backend.db.entity.UserEntity;
 import com.example.used_trade_app_backend.db.repository.UserRepository;
 import lombok.AllArgsConstructor;

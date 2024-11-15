@@ -3,7 +3,7 @@ package com.example.used_trade_app_backend.domain.login.service;
 import com.example.used_trade_app_backend.db.entity.UserSocialEntity;
 import com.example.used_trade_app_backend.db.repository.UserSocialRepository;
 import com.example.used_trade_app_backend.domain.login.request.UserRegisterRequest;
-import com.example.used_trade_app_backend.domain.login.utils.JwtUtil;
+import com.example.used_trade_app_backend.utils.JwtUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
