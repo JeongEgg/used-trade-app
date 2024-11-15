@@ -1,7 +1,6 @@
 package com.example.usedtradeapp.activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,15 +17,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.usedtradeapp.MainActivity;
 import com.example.usedtradeapp.R;
-import com.example.usedtradeapp.login.api.LoginService;
-import com.example.usedtradeapp.oauth.redirect.GoogleAuthClient;
-import com.example.usedtradeapp.oauth.api.GoogleApiService;
-import com.example.usedtradeapp.oauth.response.GoogleAccessTokenResponse;
-import com.example.usedtradeapp.oauth.response.GoogleUserInfoResponse;
-import com.example.usedtradeapp.oauth.retrofit.GoogleRetrofitClient;
-import com.example.usedtradeapp.oauth.api.UserService;
-import com.example.usedtradeapp.oauth.utils.PropertiesUtil;
-import com.google.gson.Gson;
+import com.example.usedtradeapp.domain.login.api.LoginService;
+import com.example.usedtradeapp.domain.oauth.redirect.GoogleAuthClient;
+import com.example.usedtradeapp.domain.oauth.api.GoogleApiService;
+import com.example.usedtradeapp.domain.oauth.response.GoogleAccessTokenResponse;
+import com.example.usedtradeapp.domain.oauth.response.GoogleUserInfoResponse;
+import com.example.usedtradeapp.domain.oauth.retrofit.GoogleRetrofitClient;
+import com.example.usedtradeapp.domain.oauth.api.UserService;
+import com.example.usedtradeapp.domain.oauth.utils.PropertiesUtil;
 
 import java.util.Properties;
 

@@ -15,7 +15,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.usedtradeapp.activity.LoginActivity;
 import com.example.usedtradeapp.activity.RegisterActivity;
 import com.example.usedtradeapp.databinding.ActivityMainBinding;
-import com.example.usedtradeapp.oauth.utils.PropertiesUtil;
+import com.example.usedtradeapp.domain.oauth.utils.PropertiesUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.jetbrains.annotations.Nullable;

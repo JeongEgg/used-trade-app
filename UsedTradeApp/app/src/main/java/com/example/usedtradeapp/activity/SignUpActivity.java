@@ -11,16 +11,13 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.usedtradeapp.R;
 import com.example.usedtradeapp.common.retrofit.RetrofitClient;
-import com.example.usedtradeapp.oauth.response.GoogleUserInfoResponse;
-import com.example.usedtradeapp.signup.api.SignUpApiService;
-import com.example.usedtradeapp.signup.request.SignUpRequest;
-import com.example.usedtradeapp.signup.response.SignUpResponse;
+import com.example.usedtradeapp.domain.oauth.response.GoogleUserInfoResponse;
+import com.example.usedtradeapp.domain.signup.api.SignUpApiService;
+import com.example.usedtradeapp.domain.signup.request.SignUpRequest;
+import com.example.usedtradeapp.domain.signup.response.SignUpResponse;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
