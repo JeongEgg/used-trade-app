@@ -11,7 +11,11 @@ public enum ErrorCode {
     INVALID_PASSWORD_FORMAT(1003, "비밀번호는 대문자, 소문자, 숫자, 특수 문자가 모두 포함되어야 합니다."),
     USER_NOT_FOUND(1004, "사용자를 찾을 수 없습니다."),
     INVALID_PASSWORD(1005, "비밀번호가 일치하지 않습니다."),
-    INTERNAL_SERVER_ERROR(1006,"서버 오류기 발생했습니다.");
+    INTERNAL_SERVER_ERROR(1006,"서버 오류기 발생했습니다."),
+
+    INVALID_TOKEN(1007, "유효하지 않은 토큰입니다."),
+    ACCESS_DENIED(1008, "접근이 거부되었습니다.");
+
 
     public final int code;
     public final String message;

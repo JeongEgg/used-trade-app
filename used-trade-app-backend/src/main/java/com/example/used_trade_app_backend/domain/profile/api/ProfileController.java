@@ -2,7 +2,9 @@ package com.example.used_trade_app_backend.domain.profile.api;
 
 import com.example.used_trade_app_backend.domain.profile.response.ProfileFragmentResponse;
 import com.example.used_trade_app_backend.domain.profile.service.ProfileService;
+import com.example.used_trade_app_backend.exception.ErrorCode;
 import com.example.used_trade_app_backend.utils.JwtUtil;
+import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,12 +40,8 @@ public class ProfileController {
             logger.info("nickname : {}", nickname);
 
             return ResponseEntity.ok(new ProfileFragmentResponse(nickname));
-        } catch (UsernameNotFoundException e) {
-            logger.error("User not found: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ProfileFragmentResponse("User not found"));
         } catch (Exception e) {
-            logger.error("Error processing request: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ProfileFragmentResponse("Invalid token"));
+            throw e;
         }
     }
 }

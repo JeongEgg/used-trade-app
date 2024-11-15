@@ -2,8 +2,9 @@ package com.example.used_trade_app_backend.domain.profile.service;
 
 import com.example.used_trade_app_backend.db.entity.UserEntity;
 import com.example.used_trade_app_backend.db.repository.UserRepository;
+import com.example.used_trade_app_backend.exception.ErrorCode;
+import com.example.used_trade_app_backend.exception.ProfileNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +16,6 @@ public class ProfileService {
     public String getNicknameByUserId(String userId) {
         return userRepository.findByUserId(userId)
                 .map(UserEntity::getNickname)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found for userId: " + userId));
+                .orElseThrow(() -> new ProfileNotFoundException(ErrorCode.USER_NOT_FOUND));
     }
 }
