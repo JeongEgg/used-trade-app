@@ -1,6 +1,6 @@
 package com.example.used_trade_app_backend.exception;
 
-import com.example.used_trade_app_backend.signup.response.SignUpResponse;
+import com.example.used_trade_app_backend.domain.signup.response.SignUpResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
