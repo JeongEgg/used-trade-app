@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.usedtradeapp.R;
 import com.example.usedtradeapp.activity.ProfileActivity;
@@ -32,11 +33,15 @@ public class ProfileFragment extends Fragment {
     private static final String PREFS_NAME = "UserPrefs"; // SharedPreferences 이름
     private static final String JWT_TOKEN_KEY = "jwtToken";
 
+    private TextView tvNickname;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View rootView = binding.getRoot();
+
+        tvNickname = rootView.findViewById(R.id.tv_nickname);
 
         String jwtToken = getJwtToken(requireContext());
         if (jwtToken != null) {
@@ -77,6 +82,7 @@ public class ProfileFragment extends Fragment {
             public void onResponse(Call<ProfileFragmentResponse> call, Response<ProfileFragmentResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     String nickname = response.body().getNickname();
+                    tvNickname.setText(nickname);
                     Log.d("ProfileFragment", "닉네임 : " + nickname);
                 } else {
                     Log.e("ProfileFragment", "닉네임 가져오기 실패 : " + response.message());
