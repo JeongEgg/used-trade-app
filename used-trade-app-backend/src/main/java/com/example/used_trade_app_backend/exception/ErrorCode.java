@@ -14,7 +14,8 @@ public enum ErrorCode {
     INTERNAL_SERVER_ERROR(1006,"서버 오류기 발생했습니다."),
 
     INVALID_TOKEN(1007, "유효하지 않은 토큰입니다."),
-    ACCESS_DENIED(1008, "접근이 거부되었습니다.");
+    ACCESS_DENIED(1008, "접근이 거부되었습니다."),
+    USER_INFORMATION_TAMPERED(1009, "사용자 정보가 위조되었습니다.");
 
 
     public final int code;

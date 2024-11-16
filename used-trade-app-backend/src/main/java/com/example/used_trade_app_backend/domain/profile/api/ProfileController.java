@@ -1,9 +1,13 @@
 package com.example.used_trade_app_backend.domain.profile.api;
 
+import com.example.used_trade_app_backend.domain.profile.request.ProfileUpdateRequest;
 import com.example.used_trade_app_backend.domain.profile.response.ProfileActivityResponse;
 import com.example.used_trade_app_backend.domain.profile.response.ProfileFragmentResponse;
+import com.example.used_trade_app_backend.domain.profile.response.ProfileUpdateResponse;
 import com.example.used_trade_app_backend.domain.profile.service.ProfileService;
 import com.example.used_trade_app_backend.exception.ErrorCode;
+import com.example.used_trade_app_backend.exception.ProfileNotFoundException;
+import com.example.used_trade_app_backend.exception.UserInformationTamperedException;
 import com.example.used_trade_app_backend.utils.JwtUtil;
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
@@ -63,6 +67,37 @@ public class ProfileController {
             return ResponseEntity.ok(new ProfileActivityResponse(userId,username,nickname));
         } catch (Exception e) {
             throw e;
+        }
+    }
+
+    @PostMapping("/profile/activity")
+    public ResponseEntity<ProfileUpdateResponse> updateProfile(
+            @RequestHeader("Authorization") String authorizationHeader,
+            @RequestBody ProfileUpdateRequest profileUpdateRequest){
+        try {
+            String token = authorizationHeader.replace("Bearer ", "");
+            String username = JwtUtil.extractUsername(token);
+            String userId = JwtUtil.extractUserId(token);
+
+            profileService.updateProfile(userId, username, profileUpdateRequest.getNickname(), profileUpdateRequest.getUsername());
+
+            String newToken = JwtUtil.generateTokenByLogin(userId, profileUpdateRequest.getUsername());
+
+            ProfileUpdateResponse response = new ProfileUpdateResponse(ErrorCode.SUCCESS.code, "프로필이 성공적으로 업데이트되었습니다.");
+            response.setUsername(profileUpdateRequest.getUsername());
+            response.setNickname(profileUpdateRequest.getNickname());
+            response.setToken(newToken);
+
+            return ResponseEntity.ok(response);
+        } catch (UserInformationTamperedException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(new ProfileUpdateResponse(e.getErrorCode().code, e.getErrorCode().message));
+        } catch (ProfileNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ProfileUpdateResponse(e.getErrorCode().code, e.getErrorCode().message));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ProfileUpdateResponse(ErrorCode.INTERNAL_SERVER_ERROR.code, ErrorCode.INTERNAL_SERVER_ERROR.message));
         }
     }
 }

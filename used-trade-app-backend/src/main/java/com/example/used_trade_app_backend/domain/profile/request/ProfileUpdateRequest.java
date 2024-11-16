@@ -5,6 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ProfileFragmentRequest {
-    private String token;
+public class ProfileUpdateRequest {
+    private String username;
+    private String nickname;
 }

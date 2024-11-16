@@ -1,16 +1,14 @@
 package com.example.used_trade_app_backend.db.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Builder
 @Getter
+@Setter
 @Table(name = "user_entity")
 @NoArgsConstructor
 @AllArgsConstructor
