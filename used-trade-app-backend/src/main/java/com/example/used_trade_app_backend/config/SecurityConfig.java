@@ -22,7 +22,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/social-login",
                                 "/api/sign-up",
                                 "/api/login",
-                                "/api/profile/fragment").permitAll()
+                                "/api/profile/**").permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();

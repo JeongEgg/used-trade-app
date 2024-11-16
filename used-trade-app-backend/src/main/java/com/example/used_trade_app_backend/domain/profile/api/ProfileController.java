@@ -1,5 +1,6 @@
 package com.example.used_trade_app_backend.domain.profile.api;
 
+import com.example.used_trade_app_backend.domain.profile.response.ProfileActivityResponse;
 import com.example.used_trade_app_backend.domain.profile.response.ProfileFragmentResponse;
 import com.example.used_trade_app_backend.domain.profile.service.ProfileService;
 import com.example.used_trade_app_backend.exception.ErrorCode;
@@ -40,6 +41,26 @@ public class ProfileController {
             logger.info("nickname : {}", nickname);
 
             return ResponseEntity.ok(new ProfileFragmentResponse(nickname));
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    @GetMapping("/profile/activity")
+    public ResponseEntity<ProfileActivityResponse> getUserProfile(@RequestHeader("Authorization") String authorizationHeader){
+        String token = authorizationHeader.replace("Bearer ", "");
+        try {
+            // JWT에서 데이터 추출
+            String username = JwtUtil.extractUsername(token);
+            String userId = JwtUtil.extractUserId(token);
+
+            String nickname = profileService.getNicknameByUserId(userId);
+
+            logger.info("username : {}",username);
+            logger.info("userId : {}",userId);
+            logger.info("nickname : {}", nickname);
+
+            return ResponseEntity.ok(new ProfileActivityResponse(userId,username,nickname));
         } catch (Exception e) {
             throw e;
         }
