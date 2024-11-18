@@ -20,6 +20,7 @@ import com.example.usedtradeapp.activity.ProfileActivity;
 import com.example.usedtradeapp.common.retrofit.RetrofitClient;
 import com.example.usedtradeapp.databinding.FragmentProfileBinding;
 import com.example.usedtradeapp.domain.profile.api.ProfileApiService;
+import com.example.usedtradeapp.domain.profile.response.ProfileDeleteResponse;
 import com.example.usedtradeapp.domain.profile.response.ProfileFragmentResponse;
 
 import retrofit2.Call;
@@ -72,7 +73,56 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        rootView.findViewById(R.id.layout_profile_withdraw).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteAccount(jwtToken);
+            }
+        });
+
         return rootView;
+    }
+
+    private void deleteAccount(String jwtToken) {
+        // Retrofit 인스턴스 생성
+        Retrofit retrofit = RetrofitClient.createAuthService();
+        ProfileApiService apiService = retrofit.create(ProfileApiService.class);
+
+        // "Bearer " 접두사를 붙여 Authorization 헤더 값으로 설정
+        String authorizationHeader = "Bearer " + jwtToken;
+
+        // 서버로 계정 삭제 요청
+        Call<ProfileDeleteResponse> call = apiService.withdrawUser(authorizationHeader);
+        call.enqueue(new Callback<ProfileDeleteResponse>() {
+            @Override
+            public void onResponse(Call<ProfileDeleteResponse> call, Response<ProfileDeleteResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ProfileDeleteResponse deleteResponse = response.body();
+
+                    if (deleteResponse.getCode() == 200) {
+                        Log.d("ProfileFragment", deleteResponse.getMessage());
+
+                        // JWT 토큰 삭제
+                        clearJwtToken(requireContext());
+
+                        // 로그인 화면으로 이동
+                        Intent intent = new Intent(requireContext(), LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    } else {
+                        Log.e("ProfileFragment", "계정 삭제 실패: " + deleteResponse.getMessage());
+
+                    }
+                } else {
+                    Log.e("ProfileFragment", "계정 삭제 실패: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProfileDeleteResponse> call, Throwable t) {
+                Log.e("ProfileFragment", "계정 삭제 요청 실패: " + t.getMessage());
+            }
+        });
     }
 
     private void clearJwtToken(Context context) {

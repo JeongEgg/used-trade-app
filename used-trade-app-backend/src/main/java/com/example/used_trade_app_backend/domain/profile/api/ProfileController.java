@@ -2,6 +2,7 @@ package com.example.used_trade_app_backend.domain.profile.api;
 
 import com.example.used_trade_app_backend.domain.profile.request.ProfileUpdateRequest;
 import com.example.used_trade_app_backend.domain.profile.response.ProfileActivityResponse;
+import com.example.used_trade_app_backend.domain.profile.response.ProfileDeleteResponse;
 import com.example.used_trade_app_backend.domain.profile.response.ProfileFragmentResponse;
 import com.example.used_trade_app_backend.domain.profile.response.ProfileUpdateResponse;
 import com.example.used_trade_app_backend.domain.profile.service.ProfileService;
@@ -98,6 +99,26 @@ public class ProfileController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ProfileUpdateResponse(ErrorCode.INTERNAL_SERVER_ERROR.code, ErrorCode.INTERNAL_SERVER_ERROR.message));
+        }
+    }
+
+    @DeleteMapping("/profile")
+    public ResponseEntity<ProfileDeleteResponse> deleteProfile(@RequestHeader("Authorization") String authorizationHeader) {
+        try {
+            String token = authorizationHeader.replace("Bearer ", "");
+            String userId = JwtUtil.extractUserId(token);
+
+            logger.info("계정 삭제 요청 userId : {}",userId);
+
+            profileService.deleteProfile(userId);
+
+            return ResponseEntity.ok(new ProfileDeleteResponse(200, "계정이 성공적으로 삭제되었습니다."));
+        } catch (ProfileNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ProfileDeleteResponse(e.getErrorCode().code, e.getErrorCode().message));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ProfileDeleteResponse(ErrorCode.INTERNAL_SERVER_ERROR.code, ErrorCode.INTERNAL_SERVER_ERROR.message));
         }
     }
 }

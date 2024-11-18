@@ -32,4 +32,11 @@ public class ProfileService {
 
         userRepository.save(userEntity);
     }
+
+    public void deleteProfile(String userId) {
+        UserEntity userEntity = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new ProfileNotFoundException(ErrorCode.USER_NOT_FOUND));
+
+        userRepository.delete(userEntity);
+    }
 }
