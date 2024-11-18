@@ -15,8 +15,11 @@ public enum ErrorCode {
 
     INVALID_TOKEN(1007, "유효하지 않은 토큰입니다."),
     ACCESS_DENIED(1008, "접근이 거부되었습니다."),
-    USER_INFORMATION_TAMPERED(1009, "사용자 정보가 위조되었습니다.");
+    USER_INFORMATION_TAMPERED(1009, "사용자 정보가 위조되었습니다."),
 
+    PRODUCT_ENROLL_SUCCESS(2000, "상품이 성공적으로 등록되었습니다."),
+    DUPLICATE_PRODUCT_TITLE(2001, "상품 제목이 이미 존재합니다."),
+    CATEGORY_NOT_FOUND(2002, "선택한 카테고리가 존재하지 않습니다.");
 
     public final int code;
     public final String message;

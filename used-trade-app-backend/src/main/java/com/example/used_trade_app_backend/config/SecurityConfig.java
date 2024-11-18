@@ -22,7 +22,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/social-login",
                                 "/api/sign-up",
                                 "/api/login",
-                                "/api/profile/**").permitAll()
+                                "/api/profile/**",
+                                "/api/product/**").permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();

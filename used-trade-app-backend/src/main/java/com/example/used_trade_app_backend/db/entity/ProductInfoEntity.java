@@ -1,10 +1,7 @@
 package com.example.used_trade_app_backend.db.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,6 +11,7 @@ import java.util.Set;
 @Table(name = "product_info")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductInfoEntity {
@@ -48,4 +46,16 @@ public class ProductInfoEntity {
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private Set<CategoryEntity> categories;
+
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 }
