@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.usedtradeapp.R;
+import com.example.usedtradeapp.activity.LoginActivity;
 import com.example.usedtradeapp.activity.ProfileActivity;
 import com.example.usedtradeapp.common.retrofit.RetrofitClient;
 import com.example.usedtradeapp.databinding.FragmentProfileBinding;
@@ -59,7 +60,30 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        rootView.findViewById(R.id.layout_profile_logout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearJwtToken(requireContext());
+
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                requireActivity().finish();
+            }
+        });
+
         return rootView;
+    }
+
+    private void clearJwtToken(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(JWT_TOKEN_KEY); // JWT 토큰 키 제거
+        editor.apply(); // 변경 사항 저장
+        Log.d("ProfileFragment", "JWT 토큰이 삭제되었습니다.");
+
+        String deletedToken = prefs.getString(JWT_TOKEN_KEY, "null");
+        Log.d("ProfileFragment", "삭제 후 JWT 토큰 값: " + deletedToken);
     }
 
     private String getJwtToken(Context context) {
